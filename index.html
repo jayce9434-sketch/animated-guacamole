@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#0b0f16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="STARJUNK" />
+  <title>STARJUNK</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <section id="menu" class="screen active">
+      <div class="hero">
+        <div class="title" id="gameTitle"></div>
+        <div class="subtitle" id="tagline"></div>
+      </div>
+      <div class="menu-card">
+        <button class="primary" id="playSolo">Solo Run</button>
+        <button id="playBots">Crew Run</button>
+        <button id="openPrivate">Private Room</button>
+        <button id="openSettings">Settings</button>
+        <button id="openHow">How to Play</button>
+      </div>
+      <div class="tiny" id="bestLine"></div>
+    </section>
+
+    <section id="privateScreen" class="screen">
+      <div class="panel narrow">
+        <h2>Private Room</h2>
+        <p class="muted">Room codes with 5+ characters stay completely private.</p>
+        <label>Room code<input id="roomCode" maxlength="16" autocapitalize="characters" autocomplete="off" /></label>
+        <label>Bot crew<select id="botCount"><option value="0">0</option><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></label>
+        <button class="primary" id="startPrivate">Start Room</button>
+        <button class="ghost backBtn">Back</button>
+      </div>
+    </section>
+
+    <section id="settingsScreen" class="screen">
+      <div class="panel narrow">
+        <h2>Settings</h2>
+        <label>Music Volume <span id="musicValue">100%</span><input id="musicVolume" type="range" min="0" max="2000" step="10" value="100" /></label>
+        <label>SFX Volume <span id="sfxValue">100%</span><input id="sfxVolume" type="range" min="0" max="2000" step="10" value="100" /></label>
+        <label>Screen Shake <span id="shakeValue">70%</span><input id="shakeAmount" type="range" min="0" max="100" step="5" value="70" /></label>
+        <label class="row"><span>Damage numbers</span><input id="damageNumbers" type="checkbox" checked /></label>
+        <label class="row"><span>High contrast HUD</span><input id="highContrast" type="checkbox" /></label>
+        <button class="ghost backBtn">Back</button>
+      </div>
+    </section>
+
+    <section id="howScreen" class="screen">
+      <div class="panel">
+        <h2>How to Play</h2>
+        <div class="how-grid">
+          <div><b>Move</b><span>Left joystick, WASD, or arrow keys.</span></div>
+          <div><b>Aim</b><span>Right side drag, mouse, or auto-aim.</span></div>
+          <div><b>Fire</b><span>Hold FIRE or mouse button.</span></div>
+          <div><b>Build</b><span>Collect scrap, then install parts between waves.</span></div>
+          <div><b>Dash</b><span>Use DASH to burst through danger.</span></div>
+          <div><b>Survive</b><span>Every wave introduces nastier enemies and modifiers.</span></div>
+        </div>
+        <button class="ghost backBtn">Back</button>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <canvas id="game"></canvas>
+      <div id="hud">
+        <div class="hud-left">
+          <div class="chip"><span>HP</span><b id="hpText">100</b></div>
+          <div class="chip"><span>Wave</span><b id="waveText">1</b></div>
+          <div class="chip"><span>Scrap</span><b id="scrapText">0</b></div>
+        </div>
+        <div class="hud-right">
+          <button id="pauseBtn" class="hud-btn">II</button>
+        </div>
+      </div>
+      <div id="bossBar" class="boss hidden"><span id="bossName"></span><div><i id="bossFill"></i></div></div>
+      <div id="message"></div>
+      <div id="crewChat"></div>
+      <div id="joystick" class="stick"><div class="knob"></div></div>
+      <div id="aimPad"></div>
+      <div id="actions">
+        <button id="dashBtn">DASH</button>
+        <button id="fireBtn" class="fire">FIRE</button>
+      </div>
+    </section>
+
+    <section id="upgradeScreen" class="overlay-screen hidden">
+      <div class="upgrade-card">
+        <div class="upgrade-head"><div><div class="kicker">WORKBENCH</div><h2 id="upgradeTitle">Choose an upgrade</h2></div><div class="wallet">Scrap <b id="upgradeScrap">0</b></div></div>
+        <div id="upgradeOptions" class="upgrade-grid"></div>
+        <button id="continueWave" class="primary">Continue</button>
+      </div>
+    </section>
+
+    <section id="pauseScreen" class="overlay-screen hidden">
+      <div class="panel narrow">
+        <h2>Paused</h2>
+        <button class="primary" id="resumeBtn">Resume</button>
+        <button id="pauseSettings">Settings</button>
+        <button class="danger" id="quitBtn">Quit Run</button>
+      </div>
+    </section>
+
+    <section id="gameOverScreen" class="overlay-screen hidden">
+      <div class="panel narrow center">
+        <div class="kicker">RUN ENDED</div>
+        <h2 id="gameOverTitle">System Failure</h2>
+        <p id="gameOverStats"></p>
+        <button class="primary" id="retryBtn">Run Again</button>
+        <button id="menuBtn">Main Menu</button>
+      </div>
+    </section>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
